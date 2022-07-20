@@ -1,1 +1,1 @@
-G1: [ https://petstore.swagger.io/?url=https://raw.githubusercontent.com/Ranomenjanahary/Swagger-STD21024/main/Swagger.yml#/Courses/getCoursesById ]
+TD1: [ https://petstore.swagger.io/?url=https://raw.githubusercontent.com/Ranomenjanahary/Swagger-STD21024/main/Swagger.yml ]
