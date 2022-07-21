@@ -1,0 +1,233 @@
+openapi: 3.0.1
+info:
+  title: CINEMA API STD21024
+  description: 'Global description of CINEMA API'
+  version: 1.0.0
+servers:
+ - url: https://STD21024.com
+tags: 
+ - name: Films
+paths:
+ /films:
+    get:
+      tags:
+        - Films
+      operationId: getFilms
+      summary: Get all films
+      description: Get all films with details
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+      responses:
+        200: 
+          description: List of films
+          content:
+            application/json:
+              schema:
+                 $ref: '#/components/schemas/Film'
+        400:
+          description: Bad request
+    post: 
+      tags:
+        - Films
+      operationId: create film
+      summary : Create new film
+      description: Create new film
+      requestBody:
+        description: Film was created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFilm'
+        required: true
+      responses:
+        200:
+          description: List of fims
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Film'
+        400:
+          description: Bad request 
+    put:
+      tags:
+        - Films
+      operationId: Update films
+      summary : Update the films
+      description: Update any films
+      requestBody:
+        description: Film was created
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Film'
+        required: true
+      responses:
+        200:
+          description: Created successfuly
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Film'
+        400:
+          description: Bad request
+    patch:
+      tags:
+        - Films
+      operationId: Update part of films
+      summary : Update films
+      description: Update films
+      requestBody:
+        description: Film was updated
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Film'
+              examples:
+                changeTitle:
+                  summary: Changed titme
+                  description: change title
+                  value:
+                    title: string
+                cahngeDescri:
+                  summary: Change description
+                  description: change description
+                  value:
+                    description: string
+                changeDuration:
+                  summary: Change duration
+                  description: How to change film's duration
+                  value:
+                    duration: string
+                changeProject°:
+                  summary: Change projectionDetails
+                  description: How to change film's projectionDetails
+                  value:
+                    room: string
+                    day: string
+        required: true
+      responses:
+        200:
+          description: Updated films
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Film'
+        400:
+          description: Bad request
+ /film/{id}:
+    get:
+      tags:
+        - Films
+      operationId: get film id
+      summary: Get film by id
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        200: 
+          description: List of films
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/Film'
+        400:
+          description: Bad request
+    patch:
+      tags:
+        - Films
+      operationId: Update films by id
+      summary: Update films by id
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: Updated films
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Film'
+        400:
+          description: Bad request
+    put:
+      tags:
+        - Films
+      operationId: Put film by id
+      summary: Put film id
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: The created or updated films
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Film'
+        400:
+          description: Bad request
+    delete:
+      tags:
+        - Films
+      operationId: delete film
+      summary: Delete film by id
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        200: 
+          description: Ressource deleted
+        400:
+          description: Bad request
+components:
+  schemas:
+    CreateFilm:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "The Mentalist"
+        description:
+          type: string
+          example: "Lorem ipsum"
+        duration:
+          type: string
+          example: "1:54"
+        ProjectionDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/Projection'
+    Film:
+      allOf:
+        - $ref: '#/components/schemas/CreateFilm'
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+    Projection:
+      type: object
+      properties:
+        Salle:
+          type: string
+          example: "Salle A"
+        date: 
+          type: string
+          example: "2002-12-05"
