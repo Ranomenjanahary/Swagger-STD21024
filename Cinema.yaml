@@ -7,6 +7,7 @@ servers:
  - url: https://STD21024.com
 tags: 
  - name: Films
+ - name : Categorie
 paths:
  /films:
     get:
@@ -196,6 +197,131 @@ paths:
           description: Ressource deleted
         400:
           description: Bad request
+ /Categorie:
+    get:
+      tags:
+        - Categorie
+      operationId: getCategories
+      summary: Get categories of films
+      description: Get categories details
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+      responses:
+        200: 
+          description: List of categories
+          content:
+            application/json:
+              schema:
+                 $ref: '#/components/schemas/categorie'
+        400:
+          description: Error
+    post: 
+      tags:
+        - Categorie
+      operationId: create categorie
+      summary : Create new categorie
+      description: Create new film
+      requestBody:
+        description: Film was created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/categorie'
+        required: true
+      responses:
+        200:
+          description: List of fims
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/categorie'
+        400:
+          description: Bad request 
+    put:
+      tags:
+        - Categorie
+      operationId: Update categories
+      summary : Update categories
+      description: Update any categories
+      requestBody:
+        description: Film was created
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/categorie'
+        required: true
+      responses:
+        200:
+          description: Created successfuly
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/categorie'
+        400:
+          description: Bad request
+    patch:
+      tags:
+        - Categorie
+      operationId: Update categorie
+      summary : Update categories
+      description: Update films
+      requestBody:
+        description: Film was updated
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/categorie'
+              examples:
+                changeTitle:
+                  summary: Changed titme
+                  description: change title
+                  value:
+                    title: string
+                cahngeDescri:
+                  summary: Change description
+                  description: change description
+                  value:
+                    description: string
+                changeDuration:
+                  summary: Change duration
+                  description: How to change film's duration
+                  value:
+                    duration: string
+                changeProject°:
+                  summary: Change projectionDetails
+                  description: How to change film's projectionDetails
+                  value:
+                    room: string
+                    day: string
+        required: true
+      responses:
+        200:
+          description: Updated films
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/categorie'
+        400:
+          description: Bad request
+    delete:
+      tags:
+        - Categorie
+      operationId: delete categorie
+      summary: Delete categorie
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        200: 
+          description: Ressource deleted
+        400:
+          description: Bad request
 components:
   schemas:
     CreateFilm:
@@ -203,7 +329,7 @@ components:
       properties:
         title:
           type: string
-          example: "The Mentalist"
+          example: "Last nigth"
         description:
           type: string
           example: "Lorem ipsum"
@@ -231,3 +357,22 @@ components:
         date: 
           type: string
           example: "2002-12-05"
+    categorie:
+      allOf:
+        - $ref: '#/components/schemas/categorie'
+      properties: 
+        Category:
+          type: string
+          example: 
+            name: ["horror","comédie",...]
+    CategorieFilm:
+      type: object
+      properties: 
+        name:
+          type: string
+          example: horror
+        Movie:
+          type: array
+          items: 
+            $ref: "#/components/schemas/Film"
+           
